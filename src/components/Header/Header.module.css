@@ -1,4 +1,12 @@
 .header {
   display: flex;
   align-items: center;
+  justify-content: center;
+  background: var(--gray-800);
+  padding: 1.25rem 0;
+}
+
+.header strong {
+  font-size: 1.4rem;
+  color: var(--white);
 }
