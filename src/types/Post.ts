@@ -20,3 +20,9 @@ export type Post = {
   publishedAt: Date;
   content: Content[];
 };
+
+export type PostComment = {
+  author: Author;
+  content: string;
+  publishedAt: Date;
+};

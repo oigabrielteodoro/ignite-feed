@@ -1,10 +1,15 @@
 import { ThumbsUp, Trash } from "phosphor-react";
+import { PostComment } from "../../types/Post";
 
 import Avatar from "../Avatar";
 
 import styles from "./Comment.module.css";
 
-export default function Comment() {
+type Props = {
+  comment: PostComment;
+};
+
+export default function Comment({ comment }: Props) {
   return (
     <div className={styles.comment}>
       <Avatar src="https://github.com/oigabrielteodoro.png" hasBorder={false} />
@@ -24,7 +29,7 @@ export default function Comment() {
             </button>
           </header>
 
-          <p>Muito bom Gabriel, parabéns!! 👏👏</p>
+          <p>{comment.content}</p>
         </div>
 
         <footer>
