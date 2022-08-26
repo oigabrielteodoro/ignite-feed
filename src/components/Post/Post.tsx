@@ -1,3 +1,4 @@
+import Comment from "../Comment";
 import styles from "./Post.module.css";
 
 type Props = {
@@ -48,6 +49,18 @@ export default function Post({ author, content }: Props) {
           <button type="submit">Publicar</button>
         </footer>
       </form>
+
+      <ul className={styles.commentList}>
+        <li>
+          <Comment />
+        </li>
+        <li>
+          <Comment />
+        </li>
+        <li>
+          <Comment />
+        </li>
+      </ul>
     </article>
   );
 }
