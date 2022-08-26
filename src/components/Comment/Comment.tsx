@@ -7,9 +7,14 @@ import styles from "./Comment.module.css";
 
 type Props = {
   comment: PostComment;
+  onDeleteComment: (comment: PostComment) => void;
 };
 
-export default function Comment({ comment }: Props) {
+export default function Comment({ comment, onDeleteComment }: Props) {
+  function handleDeleteComment() {
+    onDeleteComment(comment);
+  }
+
   return (
     <div className={styles.comment}>
       <Avatar src="https://github.com/oigabrielteodoro.png" hasBorder={false} />
@@ -24,7 +29,7 @@ export default function Comment({ comment }: Props) {
               </time>
             </div>
 
-            <button title="Deletar comentários">
+            <button title="Deletar comentários" onClick={handleDeleteComment}>
               <Trash size={24} />
             </button>
           </header>

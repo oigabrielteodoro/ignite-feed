@@ -43,6 +43,14 @@ export default function Post({ post }: Props) {
     setNewCommentText(event.currentTarget.value);
   }
 
+  function deleteComment(commentToDelete: PostComment) {
+    const commentsWithoutDeletedOne = comments.filter(
+      (comment) => comment.content !== commentToDelete.content
+    );
+
+    setComments(commentsWithoutDeletedOne);
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -95,7 +103,11 @@ export default function Post({ post }: Props) {
 
       <ul className={styles.commentList}>
         {comments.map((comment) => (
-          <Comment key={comment.publishedAt.toISOString()} comment={comment} />
+          <Comment
+            key={comment.publishedAt.toISOString()}
+            comment={comment}
+            onDeleteComment={deleteComment}
+          />
         ))}
       </ul>
     </article>
