@@ -1,41 +1,62 @@
+import { format, formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
+
+import { ContentType, Post as PostType } from "../../types/Post";
 import Avatar from "../Avatar";
 import Comment from "../Comment";
 import styles from "./Post.module.css";
 
 type Props = {
-  author: string;
-  content: string;
+  post: PostType;
 };
 
-export default function Post({ author, content }: Props) {
+export default function Post({ post }: Props) {
+  const publishedDateFormatted = format(
+    post.publishedAt,
+    "dd 'de' LLLL HH:mm'h'",
+    {
+      locale: ptBR,
+    }
+  );
+
+  const publishedDateRelativeToNow = formatDistanceToNow(post.publishedAt, {
+    locale: ptBR,
+    addSuffix: true,
+  });
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar hasBorder src="https://github.com/oigabrielteodoro.png" />
+          <Avatar hasBorder src={post.author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>Gabriel Teodoro</strong>
-            <span>Front-End Developer</span>
+            <strong>{post.author.name}</strong>
+            <span>{post.author.role}</span>
           </div>
         </div>
 
-        <time title="11 de Maio às 08:13" dateTime="2022-05-11 08:13:30">
-          Publicado há 1h
+        <time
+          title={publishedDateFormatted}
+          dateTime={post.publishedAt.toISOString()}
+        >
+          {publishedDateRelativeToNow}
         </time>
       </header>
 
       <div className={styles.content}>
-        <p>Fala galeraa 👋</p>
-        <p>
-          Acabei de subir mais um projeto no meu portifa. É um projeto que fiz
-          no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀
-        </p>
-        <p>
-          👉 <a href="">jane.design/doctorcare</a>
-        </p>
-        <p>
-          <a>#novoprojeto</a> <a>#nlw</a> <a>#rocketseat</a>
-        </p>
+        {post.content.map((line) => {
+          if (line.type === ContentType.LINK) {
+            return (
+              <p>
+                <a href="#" key={line.content}>
+                  {line.content}
+                </a>
+              </p>
+            );
+          }
+
+          return <p>{line.content}</p>;
+        })}
       </div>
 
       <form className={styles.commentForm}>
